@@ -18,6 +18,9 @@ public class Hint {
         if (strikeCount != 0 && ballCount != 0) {
             return sb.append(ballCount + BALL_MESSAGE + BLANK + strikeCount + STRIKE_MESSAGE).toString();
         }
+        if (strikeCount == 3) {
+            return sb.append(strikeCount + STRIKE_MESSAGE).toString();
+        }
         return NOTHING_MESSAGE;
     }
 }
