@@ -29,4 +29,13 @@ class ValidatorTest {
                 .isInstanceOf(IllegalArgumentException.class);
     }
 
+    @DisplayName("플레이어가 입력한 숫자에 중복이 있는지 검증한다.")
+    @Test
+    void numberDistinctTest() {
+        String number = "442";
+
+        assertThatThrownBy(() -> validator.playerNumber(number))
+                .isInstanceOf(IllegalArgumentException.class);
+    }
+
 }
