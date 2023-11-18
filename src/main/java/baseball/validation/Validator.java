@@ -18,6 +18,13 @@ public class Validator {
         return resultNumber;
     }
 
+    public int retryNumber(String number) {
+        checkSize(number, RETRY_NUMBER);
+        int resultNumber = checkType(number);
+
+        return resultNumber;
+    }
+
     private void checkDistinct(int resultNumber) {
         ConvertIntegerToArray converter = new ConvertIntegerToArray();
         List<Integer> distinctNumbers = converter.convert(resultNumber).stream().distinct().collect(Collectors.toList());
