@@ -5,6 +5,7 @@ import baseball.domain.Hint;
 import baseball.domain.Verifier;
 import baseball.utility.ConvertIntegerToArray;
 import baseball.utility.RandomNumber;
+import baseball.validation.Validator;
 import baseball.view.InputView;
 import baseball.view.OutputView;
 
@@ -20,6 +21,7 @@ public class GameController {
     private final BaseballStore baseballStore;
     private final Hint hint;
     private final Verifier verifier;
+    private final Validator validator;
 
     public GameController() {
         inputView = new InputView();
@@ -27,6 +29,7 @@ public class GameController {
         baseballStore = new BaseballStore();
         hint = new Hint();
         verifier = new Verifier();
+        validator = new Validator();
     }
 
     public void proceed() {
@@ -36,7 +39,7 @@ public class GameController {
         while (isRetry(state)) {
             List<Integer> collectNumber = setCollectNumber();
             start(collectNumber);
-            state = inputView.readRetryNumber();
+            state = validator.retryNumber(inputView.readRetryNumber());
         }
     }
 
@@ -49,7 +52,7 @@ public class GameController {
         boolean gameState = true;
         while (gameState) {
             ConvertIntegerToArray convertIntegerToArray = new ConvertIntegerToArray();
-            List<Integer> playerNumbers = convertIntegerToArray.convert(inputView.readNumber());
+            List<Integer> playerNumbers = convertIntegerToArray.convert(validator.playerNumber(inputView.readNumber()));
             int strikeCount = verifier.findStrike(collectNumber, playerNumbers);
             int ballCount = verifier.findBall(collectNumber, playerNumbers);
 
