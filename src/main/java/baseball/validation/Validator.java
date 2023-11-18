@@ -1,5 +1,10 @@
 package baseball.validation;
 
+import baseball.utility.ConvertIntegerToArray;
+
+import java.util.List;
+import java.util.stream.Collectors;
+
 public class Validator {
 
     private static final int PLAYER_NUMBER = 3;
@@ -8,8 +13,17 @@ public class Validator {
     public int playerNumber(String number) {
         checkSize(number, PLAYER_NUMBER);
         int resultNumber = checkType(number);
+        checkDistinct(resultNumber);
 
         return resultNumber;
+    }
+
+    private void checkDistinct(int resultNumber) {
+        ConvertIntegerToArray converter = new ConvertIntegerToArray();
+        List<Integer> distinctNumbers = converter.convert(resultNumber).stream().distinct().collect(Collectors.toList());
+        if (distinctNumbers.size() != PLAYER_NUMBER) {
+            throw new IllegalArgumentException();
+        }
     }
 
     private void checkSize(String number, int length) {
