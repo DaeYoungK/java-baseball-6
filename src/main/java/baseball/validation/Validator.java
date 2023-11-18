@@ -21,7 +21,14 @@ public class Validator {
     private void checkDistinct(int resultNumber) {
         ConvertIntegerToArray converter = new ConvertIntegerToArray();
         List<Integer> distinctNumbers = converter.convert(resultNumber).stream().distinct().collect(Collectors.toList());
+        checkContainZero(distinctNumbers);
         if (distinctNumbers.size() != PLAYER_NUMBER) {
+            throw new IllegalArgumentException();
+        }
+    }
+
+    private void checkContainZero(List<Integer> distinctNumbers) {
+        if (distinctNumbers.contains(0)) {
             throw new IllegalArgumentException();
         }
     }
