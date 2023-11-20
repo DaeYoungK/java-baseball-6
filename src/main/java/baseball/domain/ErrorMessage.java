@@ -15,7 +15,7 @@ public enum ErrorMessage {
         this.description = description;
     }
 
-    public void getMessage(ErrorMessage errorMessage) {
+    public static void getMessage(ErrorMessage errorMessage) {
         System.out.println(ERROR + BLANK + errorMessage.description);
     }
 }
