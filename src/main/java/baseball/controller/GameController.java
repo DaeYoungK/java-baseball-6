@@ -10,6 +10,9 @@ import baseball.view.InputView;
 import baseball.view.OutputView;
 
 import java.util.List;
+import java.util.concurrent.atomic.AtomicInteger;
+
+import static baseball.utility.RetryLogic.*;
 
 public class GameController {
 
@@ -33,13 +36,13 @@ public class GameController {
     }
 
     public void proceed() {
-        int state = RETRY_NUMBER;
+        AtomicInteger state = new AtomicInteger(RETRY_NUMBER);
 
         outputView.printStart();
-        while (isRetry(state)) {
+        while (isRetry(state.get())) {
             List<Integer> collectNumber = setCollectNumber();
             start(collectNumber);
-            state = validator.retryNumber(inputView.readRetryNumber());
+            retry(() -> state.set(validator.retryNumber(inputView.readRetryNumber())));
         }
     }
 
@@ -52,7 +55,10 @@ public class GameController {
         boolean gameState = true;
         while (gameState) {
             ConvertIntegerToArray convertIntegerToArray = new ConvertIntegerToArray();
-            List<Integer> playerNumbers = convertIntegerToArray.convert(validator.playerNumber(inputView.readNumber()));
+            AtomicInteger number = new AtomicInteger();
+
+            retry(() -> number.set(validator.playerNumber(inputView.readNumber())));
+            List<Integer> playerNumbers = convertIntegerToArray.convert(number.get());
             int strikeCount = verifier.findStrike(collectNumber, playerNumbers);
             int ballCount = verifier.findBall(collectNumber, playerNumbers);
 
