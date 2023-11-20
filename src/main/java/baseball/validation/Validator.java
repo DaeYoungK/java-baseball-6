@@ -9,6 +9,7 @@ public class Validator {
 
     private static final int PLAYER_NUMBER = 3;
     private static final int RETRY_NUMBER = 1;
+    private static final int NOT_RETRY_NUMBER = 0;
 
     public int playerNumber(String number) {
         checkSize(number, PLAYER_NUMBER);
@@ -21,8 +22,19 @@ public class Validator {
     public int retryNumber(String number) {
         checkSize(number, RETRY_NUMBER);
         int resultNumber = checkType(number);
+        checkNumber(resultNumber);
 
         return resultNumber;
+    }
+
+    private void checkNumber(int resultNumber) {
+        if (isPossible(resultNumber)) {
+            throw new IllegalArgumentException();
+        }
+    }
+
+    private boolean isPossible(int resultNumber) {
+        return resultNumber != RETRY_NUMBER || resultNumber != NOT_RETRY_NUMBER;
     }
 
     private void checkDistinct(int resultNumber) {
