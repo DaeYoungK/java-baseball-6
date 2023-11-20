@@ -49,8 +49,8 @@ class ValidatorTest {
                 .isInstanceOf(IllegalArgumentException.class);
     }
 
-    @DisplayName("재시도 입력 값이 0과 1이 아니면 예외가 발생한다.")
-    @ValueSource(strings = {"2", "3", "10"})
+    @DisplayName("재시도 입력 값이 1과 2가 아니면 예외가 발생한다.")
+    @ValueSource(strings = {"0", "3", "10"})
     @ParameterizedTest
     void checkRetryNumberTest(String number) {
 

@@ -1,10 +1,10 @@
 package baseball.utility;
 
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static baseball.utility.RetryLogic.*;
+import static org.assertj.core.api.Assertions.*;
 
 class RetryLogicTest {
 
@@ -14,10 +14,10 @@ class RetryLogicTest {
     @Test
     void retryTest() {
 
-        RetryLogic.retry(() -> Assertions.assertThatThrownBy(() -> plusCount())
-                .isInstanceOf(IllegalArgumentException.class));
+        assertThatThrownBy(() -> retry(() -> plusCount()))
+                .isInstanceOf(IllegalArgumentException.class);
 
-        Assertions.assertThat(count).isEqualTo(5);
+        assertThat(count).isEqualTo(5);
     }
 
     private void plusCount() {
