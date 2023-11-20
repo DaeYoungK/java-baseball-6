@@ -3,6 +3,8 @@ package baseball.validation;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ValueSource;
 
 import static org.assertj.core.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.*;
@@ -44,6 +46,15 @@ class ValidatorTest {
         String number = "402";
 
         assertThatThrownBy(() -> validator.playerNumber(number))
+                .isInstanceOf(IllegalArgumentException.class);
+    }
+
+    @DisplayName("재시도 입력 값이 0과 1이 아니면 예외가 발생한다.")
+    @ValueSource(strings = {"2", "3", "10"})
+    @ParameterizedTest
+    void checkRetryNumberTest(String number) {
+
+        assertThatThrownBy(() -> validator.retryNumber(number))
                 .isInstanceOf(IllegalArgumentException.class);
     }
 
